@@ -3,11 +3,36 @@
 #include <stdint.h>
 #include <math.h>
 
-double Pi = 3.141592653;
+/*弦截法求解非线性方程组*/
 typedef double (*f_t)(double x, double phase);
 
 
-double D2R(double x[3])
+double do_solve(double x0, double x1,f_t f,double phase, double error)
+{
+    double x_1 = 0.0;
+
+	if (fabs(f(x1,phase)) <= error){
+		return x1;
+	}
+	
+	x_1 = x1 - (x1 - x0)*(f(x1,phase) / (f(x1,phase) - f(x0,phase)));
+    return do_solve(x1,x_1,f,phase,error);
+}
+
+
+/*实例：
+ *  求解 1、cos(x)*cos(y) = 0.4327
+ *          x + y = 11°43`1``
+ *       2、cos(x)*cos(y) = 0.4327
+ *          x - y = 11°43`1``
+ *       3、cos(x)*cos(y) = 0.6524
+ *          x + y =  49°15`35``
+ *       4、cos(x)*cos(y) = 0.6524
+ *          x - y =  49°15`35``
+ * */
+const double Pi = 3.141592653;
+
+double D2R(const double x[3])
 {
     return Pi*(x[0] + x[1]/60.0 + x[2]/(60.0 * 60.0))/180.0;
 }
@@ -37,19 +62,6 @@ double df(double x, double phase)
     return (cos(x)*sin(phase - x));
 }
 
-double do_solve(double x0, double x1, f_t f,double phase, double error)
-{
-    double x_1 = 0.0;
-
-	if (fabs(f(x1,phase)) <= error){
-		return x1;
-	}
-	
-	x_1 = x1 - (x1 - x0)*(f(x1,phase) / (f(x1,phase) - f(x0,phase)));
-    return do_solve(x1,x_1,f,phase,error);
-}
-
-
 int main(void)
 {
 	double x[3] = {11.0, 43.0,1.0};
@@ -58,7 +70,6 @@ int main(void)
 	double ans = 0.0; 
 
 	phase = D2R(x);
-//	printf("phase = %lf\n\n\n",phase);
     printf("\n\nfigure : cos(delta)*cos(phi) = 0.4327\n");
 	printf("where : delta + phi = 11°43‘1’‘ = %lf\n\n",phase);
     ans = do_solve(0.0, Pi/2.0, f_1, phase, error);
@@ -87,7 +98,6 @@ int main(void)
 	x[2] = 35.0;
 	
 	phase = D2R(x);
-//	printf("phase = %lf\n\n\n",phase);
     printf("\n\nfigure : cos(delta)*cos(phi) = 0.6524\n");
 	printf("where : delta + phi = 49°15‘35 = %lf’‘\n\n",phase);
     ans = do_solve(0.0, Pi/2.0, f_1_1, phase, error);
