@@ -3,18 +3,21 @@
 #include <iostream>
 //#include "quicksort.hpp"
 #include "maxheap.hpp"
+#include "heapsort.hpp"
 
 int main(void)
 {
-    MaxHeap<int> heap;
-    heap.Insert(12);
-    heap.Insert(13);
-    heap.Insert(19);
-    heap.Insert(8);
+    std::vector<int> vec;
+    vec.push_back(10);
+    vec.push_back(12);
+    vec.push_back(19);
+    vec.push_back(8);
+    vec.push_back(11);
+    HeapBuild(vec);
 
-    int x;
-    while(heap.Top(x)){
-        std::cout << x << " ";
-        heap.Pop();
+    for (std::vector<int>::iterator pos = vec.begin();
+                                            pos != vec.end(); ++pos){
+        std::cout << *pos << " ";
     }
+    std::cout << std::endl;
 }

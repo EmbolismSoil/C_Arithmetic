@@ -11,7 +11,7 @@ MAKEFILE      = Makefile
 ####### Compiler, tools and options
 
 CC            = gcc
-CXX           = g++
+CXX           = g++ 
 DEFINES       = -DQT_CORE_LIB
 CFLAGS        = -m32 -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -m32 -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
