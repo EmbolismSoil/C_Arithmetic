@@ -13,8 +13,7 @@ int main(void)
     vec.push_back(19);
     vec.push_back(8);
     vec.push_back(11);
-    HeapBuild(vec);
-
+    HeapSort(vec);
     for (std::vector<int>::iterator pos = vec.begin();
                                             pos != vec.end(); ++pos){
         std::cout << *pos << " ";
