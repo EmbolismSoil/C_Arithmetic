@@ -36,6 +36,7 @@ template <class InputIterator>
          int distance = std::distance(begin, end - 1);
          if (distance > 0){
              distance = Random(distance);
+             std::cout << "ramdom povit = " << distance << std::endl;
               std::swap(*(begin + distance), *(end - 1));
          }
          return Partions(begin, end);
