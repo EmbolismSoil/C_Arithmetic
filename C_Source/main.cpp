@@ -5,6 +5,7 @@
 #include "maxheap.hpp"
 #include "insertsort.hpp"
 #include "randomselect.hpp"
+#include "avltreenode.h"
 
 int main(void)
 {
@@ -22,5 +23,11 @@ int main(void)
     }
     std::cout << std::endl;
 
+    Algorithms::AVLTreeNode<int, int> *A = new Algorithms::AVLTreeNode<int, int>(1, 1);
+    for (int cnt = 2; cnt < 100; ++cnt){
+        Algorithms::AVLInsert(A, new Algorithms::AVLTreeNode<int, int>(cnt, cnt));
+    }
+
+    AVLPrint(A);
     return 0;
 }
